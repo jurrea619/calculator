@@ -8,59 +8,79 @@
 
 body {
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 20%;
+    height: 100vh;
+    background-image: url("./woodBackground.png");
+    background-size: cover;
+    background-position: center;
 }
 
 .calculator {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: lightgray;
+    background-color: rgb(211, 211, 211);
+    height: 75%;
+    width: 30%;
+    padding: 10px 10px;
     border: 1px solid black;
-    width: 40%;
-    border-radius: 5%;
-    height: auto;
+    border-radius: 10px;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(40px, auto);
+    gap: 8px 12px;
 }
 
 .display {
-    height: auto;
-    min-width: 90%;
-    height: 50px;
-    background-color: whitesmoke;
-    margin-top: 16px;
-    padding: 10px 10px;
+    background-color: white;
+    min-height: 75px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+
+    display: grid;
+    grid-column: 1/5;
+    grid-template-rows: 1fr 2fr;
+}
+
+.currentOperation,
+.currentInput {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.currentInput {
     font-size: 2em;
-    text-align: right;
+    border-top: 1px solid black;
+}
+
+button {
+    font-size: 1em;
     border-radius: 10px;
 }
 
-.buttons {
-    margin: 15px 10px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    gap: 10px;
+.number,
+.operator {
+    font-size: 2em;
+}
+
+#clearBtn,
+#deleteBtn {
+    color: white;
+    font-size: large;
 }
 
 #clearBtn {
-    background-color: red;
-    width: 45%;
+    background-color: rgb(62, 136, 255);
+    grid-column: 1/3;
 }
 
 #deleteBtn {
-    background-color: pink;
-    width: 45%;
+    background-color: rgb(199, 22, 51);
+    grid-column: 3/5;
 }
 
-li {
-    list-style: none;
-}
-
-.buttons li {
-    width: 20%;
-    border: 1px solid black;
-    padding: 8px 10px;
-    border-radius: 10px;
-    text-align: center;
+.operator {
+    color: darkmagenta;
 }
