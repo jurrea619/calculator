@@ -44,20 +44,19 @@ body {
     grid-template-rows: 1fr 2fr;
 }
 
-.currentOperation,
-.currentInput {
+#ongoingFunction,
+#currentInput {
     display: flex;
     justify-content: flex-end;
     align-items: center;
 }
 
-.currentInput {
+#currentInput {
     font-size: 2em;
     border-top: 1px solid black;
 }
 
 button {
-    font-size: 1em;
     border-radius: 10px;
 }
 
@@ -84,4 +83,8 @@ button {
 
 .operator {
     color: darkmagenta;
+}
+
+#equalsBtn {
+    color: green;
 }
