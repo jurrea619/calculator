@@ -11,14 +11,15 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-image: url("./woodBackground.png");
+    background-image: url("./woodBackground.jpeg");
     background-size: cover;
     background-position: center;
 }
 
 .calculator {
     background-color: rgb(211, 211, 211);
-    height: 75%;
+    height: 70%;
+    min-width: auto;
     width: 30%;
     padding: 10px 10px;
     border: 1px solid black;
