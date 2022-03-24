@@ -14,13 +14,13 @@ body {
     background-image: url("./woodBackground.jpeg");
     background-size: cover;
     background-position: center;
+    overflow: scroll;
 }
 
 .calculator {
     background-color: rgb(211, 211, 211);
-    height: 70%;
-    min-width: auto;
-    width: 30%;
+    height: 500px;
+    width: 300px;
     padding: 10px 10px;
     border: 1px solid black;
     border-radius: 10px;
@@ -33,14 +33,15 @@ body {
 
 .display {
     background-color: white;
-    min-height: 75px;
+    max-width: 100%;
     padding: 5px 10px;
     margin-bottom: 5px;
     border: 1px solid black;
     border-radius: 10px;
 
-    display: grid;
     grid-column: 1/5;
+    
+    display: grid;
     grid-template-rows: 1fr 2fr;
 }
 
@@ -49,11 +50,21 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: visible;
 }
 
 #currentInput {
     font-size: 2em;
     border-top: 1px solid black;
+   
+}
+
+.display > p {
+    width: 100%;
+    min-width: 0;
 }
 
 button {

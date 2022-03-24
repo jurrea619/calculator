@@ -1,6 +1,7 @@
 const ongoingFunctionDisplay = document.getElementById('ongoingFunction');
 const currentInputDisplay = document.getElementById('currentInput');
-let initialEntry = true; 
+let initialEntry = true;
+let decimalUsed = false;
 
 function add(a,b) {
     return a+b;
@@ -40,7 +41,24 @@ function operate(operator, a, b){
 // Get all number and decimal button
 let numberButtons = Array.from(document.getElementsByClassName("number"));
 // attach updateDisplay function to buttons
-// numberButtons.forEach(button => button.)
+numberButtons.forEach(button => button.addEventListener('click', () => {
+    let buttonPushed = button.textContent;
+    if(buttonPushed === '.') {
+        if(!decimalUsed) {
+            updateDisplay(buttonPushed) 
+            decimalUsed = true;
+        }
+        else{
+            //temp hold previous ongoing function
+            let ongoingFunction = ongoingFunctionDisplay.textContent;
+            ongoingFunctionDisplay.textContent = "Decimal has been used already";
+            setTimeout(setOngoingFunction, 2000, ongoingFunction);
+        }
+    }
+    else {
+        updateDisplay(buttonPushed);
+    }
+}));
 
 /**
  * Update current input display with number, or decimal, given
@@ -57,8 +75,8 @@ function updateDisplay(number){
 }
 
 // Set ongoing function display for user to know current state.
-function setOngoingFunction(number, operator){
-    ongoingFunctionDisplay.textContent = `${number} ${operator}`;
+function setOngoingFunction(string){
+    ongoingFunctionDisplay.textContent = string;
 }
 
 /*
@@ -68,16 +86,23 @@ function clearAll(){
     currentInputDisplay.textContent = 0;
     ongoingFunctionDisplay.textContent = "";
     initialEntry = true;
+    decimalUsed = false;
 }
 
 /**
  * Delete previous number/decimal from current input
  */
 function deleteLastEntry(){
-    slicedText = currentInputDisplay.textContent
-                                        .split("")
-                                            .slice(0,-1)
-                                                .join("");
-    slicedText.length === 0 ? currentInputDisplay.textContent = 0 :
-                                currentInputDisplay.textContent = slicedText;
+
+    let splitText = currentInputDisplay.textContent.split("");
+    if(splitText[splitText.length-1] === '.'){ decimalUsed = false }
+    splitText = splitText.slice(0,-1)
+                            .join("");
+    if(!splitText.length){
+        currentInputDisplay.textContent = 0;
+        initialEntry = true;
+    }
+    else{
+        currentInputDisplay.textContent = splitText;
+    }
 }
