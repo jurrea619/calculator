@@ -60,10 +60,7 @@ function decimalPushed(){
         decimalUsed = true;
     }
     else {
-        //temp hold previous ongoing function
-        let ongoingFunction = ongoingFunctionDisplay.textContent;
-        ongoingFunctionDisplay.textContent = "Decimal has been used already";
-        setTimeout(setOngoingFunction, 1000, ongoingFunction);
+        errorMessage("Decimal has been used");
     }
 }
 
@@ -92,12 +89,15 @@ operatorButtons.forEach((button) => button.addEventListener('click', () => {
 equalsButton.addEventListener('click', () => {
     if(firstOperand && firstOperator){
         secondOperand = currentInputDisplay.textContent;
-        let result = +operate(firstOperator, firstOperand, secondOperand).toFixed(12);
-        showResult(result);
+        if(firstOperator === '/' && secondOperand == 0){
+            errorMessage("Cannot divide by 0");
+            initialEntry = true;
+        }
+        else{
+            let result = +operate(firstOperator, firstOperand, secondOperand).toFixed(12);
+            showResult(result);
+        }
     }
-    // else{
-    //     ERROR MESSAGE
-    // }
 });
 
 function showResult(answer){
@@ -130,8 +130,6 @@ function setOngoingFunction(str){
     ongoingFunctionDisplay.textContent = str;
 }
 
-// ADD ERROR MESSAGE FUNCTION
-
 /*
     Clear ongoing function, set display to 0, and reset all variables
 */
@@ -160,4 +158,14 @@ function deleteLastEntry(){
     else{
         currentInputDisplay.textContent = splitText;
     }
+}
+
+/**
+ * Displays error message on seconday display, resets display after 1 sec timer
+ * @param msg message to be shown on screen
+ */
+function errorMessage(msg){
+    let ongoingFunction = ongoingFunctionDisplay.textContent;
+    setOngoingFunction(msg);
+    setTimeout(setOngoingFunction, 1000, ongoingFunction);
 }
