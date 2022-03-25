@@ -14,10 +14,11 @@ body {
     background-image: url("./woodBackground.jpeg");
     background-size: cover;
     background-position: center;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
 
 .calculator {
+    flex-shrink: 1;
     background-color: rgb(211, 211, 211);
     height: 500px;
     width: 300px;
@@ -41,8 +42,10 @@ body {
 
     grid-column: 1/5;
     
+    flex-grow: 0;
     display: grid;
-    grid-template-rows: 1fr 2fr;
+    /* grid-template-rows: 1fr 2fr; */
+    grid-template-rows: 20% 80%;
 }
 
 #ongoingFunction,
@@ -53,26 +56,20 @@ body {
     width: 100%;
     min-width: 0;
     max-width: 100%;
-    overflow: visible;
 }
 
 #currentInput {
     font-size: 2em;
-    border-top: 1px solid black;
-   
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
-.display > p {
-    width: 100%;
-    min-width: 0;
+#ongoingFunction {
+    font-style: italic;
 }
 
 button {
     border-radius: 10px;
-}
-
-.number,
-.operator {
     font-size: 2em;
 }
 
