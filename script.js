@@ -85,6 +85,7 @@ operatorButtons.forEach((button) => button.addEventListener('click', () => {
         firstOperand = currentResult;
         firstOperator = secondOperator;
     }
+    decimalUsed = false;
     clearDisplay();
 }));
 
