@@ -92,7 +92,7 @@ operatorButtons.forEach((button) => button.addEventListener('click', () => {
 equalsButton.addEventListener('click', () => {
     if(firstOperand && firstOperator){
         secondOperand = currentInputDisplay.textContent;
-        let result = operate(firstOperator, firstOperand, secondOperand);
+        let result = +operate(firstOperator, firstOperand, secondOperand).toFixed(12);
         showResult(result);
     }
     // else{
