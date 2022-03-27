@@ -66,7 +66,8 @@ function decimalPushed(){
 
 operatorButtons.forEach((button) => button.addEventListener('click', () => {
     // if no previous number, add current num and chosen operator to ongoing function display
-    if(!firstOperand){
+    if(initialEntry){ errorMessage("Must enter a value") }
+    else if(!firstOperand){
         firstOperand = currentInputDisplay.textContent;
         firstOperator = button.textContent;
         setOngoingFunction(`${firstOperand} ${firstOperator}`);
@@ -82,19 +83,20 @@ operatorButtons.forEach((button) => button.addEventListener('click', () => {
         firstOperand = currentResult;
         firstOperator = secondOperator;
     }
-    decimalUsed = false;
+    // decimalUsed = false;
     clearDisplay();
 }));
 
 equalsButton.addEventListener('click', () => {
+    // before we do anything, check there are two operands and operator
     if(firstOperand && firstOperator){
         secondOperand = currentInputDisplay.textContent;
         if(firstOperator === '/' && secondOperand == 0){
             errorMessage("Cannot divide by 0");
-            initialEntry = true;
+            clearDisplay();
         }
         else{
-            let result = +operate(firstOperator, firstOperand, secondOperand).toFixed(12);
+            let result = +operate(firstOperator, firstOperand, secondOperand).toFixed(6);
             showResult(result);
         }
     }
@@ -165,7 +167,7 @@ function deleteLastEntry(){
  * @param msg message to be shown on screen
  */
 function errorMessage(msg){
-    let ongoingFunction = ongoingFunctionDisplay.textContent;
+    let savedOngoingFunction = ongoingFunctionDisplay.textContent;
     setOngoingFunction(msg);
-    setTimeout(setOngoingFunction, 1000, ongoingFunction);
+    setTimeout(setOngoingFunction, 1000, savedOngoingFunction);
 }
