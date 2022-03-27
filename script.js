@@ -1,9 +1,11 @@
 const ongoingFunctionDisplay = document.getElementById('ongoingFunction');
 const currentInputDisplay = document.getElementById('currentInput');
-const numberButtons = document.querySelectorAll(".number");
-const operatorButtons = document.querySelectorAll(".operator");
+const numberButtons = Array.from(document.querySelectorAll(".number"));
+const operatorButtons = Array.from(document.querySelectorAll(".operator"));
 const decimalButton = document.getElementById("decimalBtn");
 const equalsButton = document.getElementById("equalsBtn");
+const buttons = document.querySelectorAll("button");
+
 let initialEntry = true;
 let decimalUsed = false;
 let firstOperator = "";
@@ -41,7 +43,6 @@ function operate(operator, a, b){
         return multiply(a,b);
         break;
     case '/':
-        // ADD ERROR MESSAGE FOR DIVIDING BY 0!
         return divide(a,b);
         break;
     }
@@ -71,6 +72,7 @@ operatorButtons.forEach((button) => button.addEventListener('click', () => {
         firstOperand = currentInputDisplay.textContent;
         firstOperator = button.textContent;
         setOngoingFunction(`${firstOperand} ${firstOperator}`);
+        console.log(firstOperator);
     }
     // second operation chosen, and first operand/operator exists
     else{
@@ -83,7 +85,7 @@ operatorButtons.forEach((button) => button.addEventListener('click', () => {
         firstOperand = currentResult;
         firstOperator = secondOperator;
     }
-    // decimalUsed = false;
+    decimalUsed = false;
     clearDisplay();
 }));
 
@@ -171,3 +173,14 @@ function errorMessage(msg){
     setOngoingFunction(msg);
     setTimeout(setOngoingFunction, 1000, savedOngoingFunction);
 }
+
+document.addEventListener("keyup", function(e){
+    if(e.key === "Enter"){
+        equalsButton.click();
+    }
+    else{
+        buttons.forEach((button) => {
+            if(button.textContent == e.key) { button.click() };
+        })
+    }
+});
