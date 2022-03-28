@@ -1,3 +1,4 @@
+// declare variables for all necessary elements
 const ongoingFunctionDisplay = document.getElementById('ongoingFunction');
 const currentInputDisplay = document.getElementById('currentInput');
 const numberButtons = Array.from(document.querySelectorAll(".number"));
@@ -6,6 +7,7 @@ const decimalButton = document.getElementById("decimalBtn");
 const equalsButton = document.getElementById("equalsBtn");
 const buttons = document.querySelectorAll("button");
 
+// initialize vars
 let initialEntry = true;
 let decimalUsed = false;
 let firstOperator = "";
@@ -29,9 +31,15 @@ function divide(a,b){
     return a/b;
 }
 
-// make sure to check for equals button
+/**
+ * Returns evaluated equation of a with b using given operator
+ * 
+ * @param {operation} operator operator used for equation
+ * @param {number} a first operand
+ * @param {number} b second operand
+ * @returns evaluated equation using given operation and operands
+ */
 function operate(operator, a, b){
-    //switch statement for which operator
     switch (operator){
     case '+': 
         return add(a,b); 
@@ -48,13 +56,17 @@ function operate(operator, a, b){
     }
 }
 
-// attach updateDisplay function to buttons
+// attach click handler function to number buttons
 numberButtons.forEach((button) => button.addEventListener('click', () => {
     updateDisplay(button.textContent);
 }));
 
+// attach click handler function to decimal button
 decimalButton.addEventListener('click', decimalPushed);
 
+/**
+ * Add decimal to display. Display error message if already used once
+ */
 function decimalPushed(){
     if (!decimalUsed) {
         updateDisplay(".")
@@ -65,19 +77,30 @@ function decimalPushed(){
     }
 }
 
+// attach click handler function to operator buttons
 operatorButtons.forEach((button) => button.addEventListener('click', () => {
+    operatorPushed(button.textContent);
+}));
+
+/**
+ * Save current input and chosen operator to secondary display if first operator.
+ * Subsequent operators will evaluate previous operand and operator with current input
+ * and push to secondary display
+ * 
+ * @param {string} op operator that was clicked
+ */
+function operatorPushed(op){
     // if no previous number, add current num and chosen operator to ongoing function display
-    if(initialEntry){ errorMessage("Must enter a value") }
-    else if(!firstOperand){
+    if (initialEntry) { errorMessage("Must enter a value") }
+    else if (!firstOperand) {
         firstOperand = currentInputDisplay.textContent;
-        firstOperator = button.textContent;
+        firstOperator = op;
         setOngoingFunction(`${firstOperand} ${firstOperator}`);
-        console.log(firstOperator);
     }
     // second operation chosen, and first operand/operator exists
-    else{
+    else {
         secondOperand = currentInputDisplay.textContent;
-        secondOperator = button.textContent;
+        secondOperator = op;
         let currentResult = operate(firstOperator, firstOperand, secondOperand);
         // set ongoing function with result and second operator
         setOngoingFunction(`${currentResult} ${secondOperator}`);
@@ -87,12 +110,14 @@ operatorButtons.forEach((button) => button.addEventListener('click', () => {
     }
     decimalUsed = false;
     clearDisplay();
-}));
+}
 
+// attach click handler function for equals button
 equalsButton.addEventListener('click', () => {
-    // before we do anything, check there are two operands and operator
+    // check for two operands and operator
     if(firstOperand && firstOperator){
         secondOperand = currentInputDisplay.textContent;
+        // check divison by zero
         if(firstOperator === '/' && secondOperand == 0){
             errorMessage("Cannot divide by 0");
             clearDisplay();
@@ -104,12 +129,20 @@ equalsButton.addEventListener('click', () => {
     }
 });
 
+/**
+ * Displays evaluted equation's result to main display and resets secondary
+ * 
+ * @param {number} answer answer to be shown after equation evaluated
+ */
 function showResult(answer){
     currentInputDisplay.textContent = answer;
     setOngoingFunction("");
     firstOperand = "";
 }
 
+/**
+ * Clear main display for next entry
+ */
 function clearDisplay(){
     currentInputDisplay.textContent = 0;
     initialEntry = true;
@@ -117,7 +150,8 @@ function clearDisplay(){
 
 /**
  * Update current input display with number, or decimal, given
- * @param {char} char to be added to display 
+ * 
+ * @param {string} str string, or char, to be added to display 
  */
 function updateDisplay(str){
     if(initialEntry){
@@ -129,7 +163,10 @@ function updateDisplay(str){
     }
 }
 
-// Set ongoing function display for user to know current state.
+/**
+ * 
+ * @param {string} str string to add to secondary ongoing function display
+ */
 function setOngoingFunction(str){
     ongoingFunctionDisplay.textContent = str;
 }
@@ -165,8 +202,9 @@ function deleteLastEntry(){
 }
 
 /**
- * Displays error message on seconday display, resets display after 1 sec timer
- * @param msg message to be shown on screen
+ * Displays error message on secondary display, resets display after 1 sec timer
+ * 
+ * @param {string} msg message to be shown on screen
  */
 function errorMessage(msg){
     let savedOngoingFunction = ongoingFunctionDisplay.textContent;
@@ -174,6 +212,7 @@ function errorMessage(msg){
     setTimeout(setOngoingFunction, 1000, savedOngoingFunction);
 }
 
+// attach listener to page for keyboard support
 document.addEventListener("keyup", function(e){
     if(e.key === "Enter"){
         equalsButton.click();

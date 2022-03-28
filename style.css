@@ -11,7 +11,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-image: url("./woodBackground.jpeg");
+    background-image: url("./images/woodBackground.jpeg");
     background-size: cover;
     background-position: center;
     overflow: auto;
@@ -41,7 +41,6 @@ body {
     border-radius: 10px;
 
     grid-column: 1/5;
-    
     flex-grow: 0;
     display: grid;
     grid-template-rows: 1fr 2fr;
