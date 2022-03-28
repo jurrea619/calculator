@@ -9,4 +9,4 @@ This project was created with:
 * CSS
 * Javascript
 
-[Live Project on personal website](joshuaurrea.com/calculator)
+[Live Project on personal website](http://www.joshuaurrea.com/calculator)
